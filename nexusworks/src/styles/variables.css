@@ -1,0 +1,103 @@
+/* ============================================================
+   NexusWorks — Design Tokens
+   Dark-first theme with a light-mode override via [data-theme].
+   ============================================================ */
+
+:root,
+[data-theme='dark'] {
+  /* Surfaces */
+  --bg-primary: #080c14; /* deep space navy */
+  --bg-secondary: #0d1321; /* card surfaces */
+  --bg-tertiary: #11182b; /* raised surfaces */
+  --bg-glass: rgba(255, 255, 255, 0.04); /* glassmorphism panels */
+  --bg-glass-strong: rgba(255, 255, 255, 0.07);
+
+  /* Accents */
+  --accent-1: #6c63ff; /* electric violet — primary CTA */
+  --accent-1-soft: rgba(108, 99, 255, 0.16);
+  --accent-2: #00d4aa; /* mint teal — AI / tech indicators */
+  --accent-2-soft: rgba(0, 212, 170, 0.14);
+  --accent-3: #ff6b6b; /* coral — highlights / warnings */
+  --accent-3-soft: rgba(255, 107, 107, 0.14);
+
+  /* Text */
+  --text-primary: #f0f4ff;
+  --text-secondary: #c2cbe0;
+  --text-muted: #8892a4;
+
+  /* Lines */
+  --border: rgba(108, 99, 255, 0.2);
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  /* Effects */
+  --glow-violet: 0 0 40px rgba(108, 99, 255, 0.45);
+  --glow-teal: 0 0 40px rgba(0, 212, 170, 0.35);
+  --shadow-card: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+  --gradient-brand: linear-gradient(135deg, #6c63ff 0%, #00d4aa 100%);
+  --gradient-warm: linear-gradient(135deg, #6c63ff 0%, #ff6b6b 100%);
+  --gradient-text: linear-gradient(120deg, #f0f4ff 0%, #c4c0ff 40%, #00d4aa 100%);
+
+  /* Typography */
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Type scale (fluid) */
+  --fs-hero: clamp(2.6rem, 6.5vw, 5.5rem);
+  --fs-h1: clamp(2.1rem, 4.5vw, 3.6rem);
+  --fs-h2: clamp(1.7rem, 3.2vw, 2.6rem);
+  --fs-h3: clamp(1.3rem, 2vw, 1.7rem);
+  --fs-lg: 1.18rem;
+  --fs-base: 1rem;
+  --fs-sm: 0.875rem;
+  --fs-xs: 0.78rem;
+
+  /* Spacing & layout */
+  --maxw: 1240px;
+  --maxw-narrow: 880px;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --space-section: clamp(4.5rem, 10vw, 9rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.18s;
+  --dur: 0.4s;
+  --dur-slow: 0.8s;
+
+  /* Misc */
+  --nav-h: 76px;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg-primary: #f5f6fb;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eef0f9;
+  --bg-glass: rgba(8, 12, 20, 0.03);
+  --bg-glass-strong: rgba(8, 12, 20, 0.06);
+
+  --accent-1: #5a4ff0;
+  --accent-1-soft: rgba(90, 79, 240, 0.12);
+  --accent-2: #009e80;
+  --accent-2-soft: rgba(0, 158, 128, 0.12);
+  --accent-3: #e8504f;
+  --accent-3-soft: rgba(232, 80, 79, 0.12);
+
+  --text-primary: #0c1222;
+  --text-secondary: #2b3450;
+  --text-muted: #5b657d;
+
+  --border: rgba(90, 79, 240, 0.22);
+  --border-soft: rgba(8, 12, 20, 0.1);
+
+  --glow-violet: 0 0 36px rgba(90, 79, 240, 0.25);
+  --glow-teal: 0 0 36px rgba(0, 158, 128, 0.22);
+  --shadow-card: 0 22px 50px -30px rgba(12, 18, 34, 0.4);
+  --gradient-text: linear-gradient(120deg, #0c1222 0%, #5a4ff0 50%, #009e80 100%);
+
+  color-scheme: light;
+}
