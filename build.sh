@@ -1,19 +1,9 @@
 #!/usr/bin/env bash
-#
-# build.sh — scaffold the complete NexusWorks project.
-# Generated script: creates the folder structure and writes every file
-# with its full contents. Run from any empty directory:
-#
-#   bash build.sh && cd nexusworks && npm install
-#
-# Re-running is safe: it overwrites files in ./nexusworks with fresh copies.
-
+# build.sh — scaffold the complete Cortinix project (folders + every file).
+# Usage (from an empty directory):  bash build.sh && cd cortinix && npm install
 set -euo pipefail
-
-ROOT="nexusworks"
-echo "→ Scaffolding NexusWorks into ./$ROOT"
-
-# ── Directories ─────────────────────────────────────────
+ROOT="cortinix"
+echo "→ Scaffolding Cortinix into ./$ROOT"
 mkdir -p "$ROOT"
 mkdir -p "$ROOT/backend"
 mkdir -p "$ROOT/backend/middleware"
@@ -27,13 +17,11 @@ mkdir -p "$ROOT/src/pages"
 mkdir -p "$ROOT/src/pages/Services"
 mkdir -p "$ROOT/src/styles"
 mkdir -p "$ROOT/src/utils"
-
-# ── Files ───────────────────────────────────────────────
 echo "  • .env.example"
-cat > "$ROOT/.env.example" << 'NEXUS_EOF'
+cat > "$ROOT/.env.example" << 'CORTINIX_EOF'
 # ── Backend ───────────────────────────────────────────────
 # MongoDB connection string (Atlas or local). Fill in user/password/cluster.
-MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/nexusworks
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/cortinix
 
 # Port the Express API listens on
 PORT=5000
@@ -52,10 +40,9 @@ ADMIN_PASS=change-me-please
 # Base URL the React app uses for API calls.
 # Leave blank to use the Vite dev proxy (recommended in development).
 VITE_API_URL=
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • .gitignore"
-cat > "$ROOT/.gitignore" << 'NEXUS_EOF'
+cat > "$ROOT/.gitignore" << 'CORTINIX_EOF'
 # Dependencies
 node_modules/
 backend/node_modules/
@@ -98,11 +85,10 @@ Thumbs.db
 coverage/
 .cache/
 .temp/
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • README.md"
-cat > "$ROOT/README.md" << 'NEXUS_EOF'
-# NexusWorks
+cat > "$ROOT/README.md" << 'CORTINIX_EOF'
+# Cortinix
 
 **Where Human Intelligence Meets AI Precision — Faster Delivery, Smarter Outcomes.**
 
@@ -127,7 +113,7 @@ A production-ready, fully animated agency website for an all-in-one services age
 ## Project structure
 
 ```
-nexusworks/
+cortinix/
 ├── backend/
 │   ├── middleware/      cors.js, errorHandler.js
 │   ├── models/          Query.js          (Mongoose schema)
@@ -257,12 +243,11 @@ Validation runs on both the client (Contact form) and the server (express-valida
 ## Packaging
 
 ```bash
-tar -czf nexusworks.tar.gz nexusworks/
+tar -czf cortinix.tar.gz cortinix/
 ```
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • backend/middleware/cors.js"
-cat > "$ROOT/backend/middleware/cors.js" << 'NEXUS_EOF'
+cat > "$ROOT/backend/middleware/cors.js" << 'CORTINIX_EOF'
 import cors from 'cors';
 
 /**
@@ -289,10 +274,9 @@ const corsMiddleware = cors({
 });
 
 export default corsMiddleware;
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • backend/middleware/errorHandler.js"
-cat > "$ROOT/backend/middleware/errorHandler.js" << 'NEXUS_EOF'
+cat > "$ROOT/backend/middleware/errorHandler.js" << 'CORTINIX_EOF'
 /* eslint-disable no-unused-vars */
 
 /** 404 handler — reached when no route matches. */
@@ -323,10 +307,9 @@ export function errorHandler(err, req, res, next) {
     error: status === 500 ? 'Internal server error' : err.message,
   });
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • backend/models/Query.js"
-cat > "$ROOT/backend/models/Query.js" << 'NEXUS_EOF'
+cat > "$ROOT/backend/models/Query.js" << 'CORTINIX_EOF'
 import mongoose from 'mongoose';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -369,10 +352,9 @@ const querySchema = new mongoose.Schema(
 const Query = mongoose.model('Query', querySchema);
 
 export default Query;
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • backend/routes/queryRoutes.js"
-cat > "$ROOT/backend/routes/queryRoutes.js" << 'NEXUS_EOF'
+cat > "$ROOT/backend/routes/queryRoutes.js" << 'CORTINIX_EOF'
 import { Router } from 'express';
 import { body, validationResult } from 'express-validator';
 import basicAuth from 'express-basic-auth';
@@ -430,7 +412,7 @@ router.post('/queries', validateQuery, async (req, res, next) => {
 const adminAuth = basicAuth({
   users: { [process.env.ADMIN_USER || 'admin']: process.env.ADMIN_PASS || 'changeme' },
   challenge: true,
-  realm: 'NexusWorks Admin',
+  realm: 'Cortinix Admin',
 });
 
 /**
@@ -447,10 +429,9 @@ router.get('/queries', adminAuth, async (req, res, next) => {
 });
 
 export default router;
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • backend/server.js"
-cat > "$ROOT/backend/server.js" << 'NEXUS_EOF'
+cat > "$ROOT/backend/server.js" << 'CORTINIX_EOF'
 import express from 'express';
 import mongoose from 'mongoose';
 import rateLimit from 'express-rate-limit';
@@ -464,7 +445,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/nexusworks';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/cortinix';
 
 // ── Core middleware ─────────────────────────────────────
 app.disable('x-powered-by');
@@ -502,7 +483,7 @@ async function start() {
     console.log('✓ MongoDB connected');
     app.listen(PORT, () => {
       // eslint-disable-next-line no-console
-      console.log(`✓ NexusWorks API running on http://localhost:${PORT}`);
+      console.log(`✓ Cortinix API running on http://localhost:${PORT}`);
     });
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -514,10 +495,9 @@ async function start() {
 start();
 
 export default app;
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • index.html"
-cat > "$ROOT/index.html" << 'NEXUS_EOF'
+cat > "$ROOT/index.html" << 'CORTINIX_EOF'
 <!doctype html>
 <html lang="en" data-theme="dark">
   <head>
@@ -526,12 +506,12 @@ cat > "$ROOT/index.html" << 'NEXUS_EOF'
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="NexusWorks — Where Human Intelligence Meets AI Precision. We build, scale and automate your entire business across 15+ specialized services."
+      content="Cortinix — Where Human Intelligence Meets AI Precision. We build, scale and automate your entire business across 15+ specialized services."
     />
     <meta name="theme-color" content="#080C14" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="NexusWorks — Human Intelligence Meets AI Precision" />
+    <meta property="og:title" content="Cortinix — Human Intelligence Meets AI Precision" />
     <meta
       property="og:description"
       content="AI + Human collaboration across 15+ specialized services. Faster delivery, smarter outcomes."
@@ -546,7 +526,7 @@ cat > "$ROOT/index.html" << 'NEXUS_EOF'
       rel="stylesheet"
     />
 
-    <title>NexusWorks — Human Intelligence Meets AI Precision</title>
+    <title>Cortinix — Human Intelligence Meets AI Precision</title>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -554,16 +534,15 @@ cat > "$ROOT/index.html" << 'NEXUS_EOF'
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • package.json"
-cat > "$ROOT/package.json" << 'NEXUS_EOF'
+cat > "$ROOT/package.json" << 'CORTINIX_EOF'
 {
-  "name": "nexusworks",
+  "name": "cortinix",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "NexusWorks — Where Human Intelligence Meets AI Precision. Production agency website.",
+  "description": "Cortinix — Where Human Intelligence Meets AI Precision. Production agency website.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -602,10 +581,9 @@ cat > "$ROOT/package.json" << 'NEXUS_EOF'
     "vite": "^5.4.6"
   }
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • public/favicon.svg"
-cat > "$ROOT/public/favicon.svg" << 'NEXUS_EOF'
+cat > "$ROOT/public/favicon.svg" << 'CORTINIX_EOF'
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
@@ -616,10 +594,9 @@ cat > "$ROOT/public/favicon.svg" << 'NEXUS_EOF'
   <rect width="32" height="32" rx="8" fill="#080C14"/>
   <path d="M9 23V9h2.6l8.8 9.8V9H23v14h-2.6L11.6 13.2V23H9z" fill="url(#g)"/>
 </svg>
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/App.jsx"
-cat > "$ROOT/src/App.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/App.jsx" << 'CORTINIX_EOF'
 import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -776,10 +753,9 @@ export default function App() {
     </div>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/AnimatedCounter.jsx"
-cat > "$ROOT/src/components/AnimatedCounter.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/AnimatedCounter.jsx" << 'CORTINIX_EOF'
 import CountUp from 'react-countup';
 import useScrollAnimation from '../utils/useScrollAnimation';
 
@@ -824,32 +800,52 @@ export default function AnimatedCounter({
     </span>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/CursorTrail.jsx"
-cat > "$ROOT/src/components/CursorTrail.jsx" << 'NEXUS_EOF'
-import { useEffect, useRef } from 'react';
+cat > "$ROOT/src/components/CursorTrail.jsx" << 'CORTINIX_EOF'
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * CursorTrail
  * Custom glow cursor: a small dot that tracks instantly and a ring that
  * lags with easing. The ring expands when hovering interactive elements.
- * Only active on fine pointers without reduced-motion; otherwise renders
- * nothing and the native cursor is used.
+ *
+ * Only runs on true mouse devices (fine pointer + hover capable) without
+ * reduced-motion. On touch / coarse-pointer devices it renders nothing,
+ * so the elements can never get stuck in a corner. It also hides itself
+ * whenever the pointer leaves the window (or the tab loses focus) and
+ * reappears on return.
  */
 export default function CursorTrail() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
+  const [enabled, setEnabled] = useState(false);
 
+  // 1) Capability detection — decide once, on the client, whether to mount
+  //    the custom cursor at all. Touch / coarse-pointer devices get nothing.
   useEffect(() => {
-    const fine = window.matchMedia('(pointer: fine)').matches;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!fine || prefersReduced) return undefined;
+    const mq = window.matchMedia(
+      '(pointer: fine) and (hover: hover) and (prefers-reduced-motion: no-preference)'
+    );
+    const apply = () => setEnabled(mq.matches);
+    apply();
+    // React to device/setting changes (e.g. plugging in a mouse).
+    mq.addEventListener?.('change', apply);
+    return () => {
+      mq.removeEventListener?.('change', apply);
+    };
+  }, []);
 
-    document.body.classList.add('has-cursor-trail');
+  // 2) Animation + listeners — only once enabled (and the nodes are in the DOM).
+  useEffect(() => {
+    if (!enabled) return undefined;
 
     const dot = dotRef.current;
     const ring = ringRef.current;
+    if (!dot || !ring) return undefined;
+
+    document.body.classList.add('has-cursor-trail');
+
     const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     const ringPos = { ...pos };
     let rafId = null;
@@ -857,40 +853,60 @@ export default function CursorTrail() {
     const onMove = (e) => {
       pos.x = e.clientX;
       pos.y = e.clientY;
-      if (dot) {
-        dot.style.left = `${pos.x}px`;
-        dot.style.top = `${pos.y}px`;
-      }
+      dot.style.left = `${pos.x}px`;
+      dot.style.top = `${pos.y}px`;
     };
 
     const isInteractive = (el) =>
-      el && (el.closest('a, button, [data-cta], input, textarea, select, [role="button"]'));
+      el && el.closest('a, button, [data-cta], input, textarea, select, [role="button"]');
 
     const onOver = (e) => {
-      if (ring) ring.classList.toggle('is-hover', !!isInteractive(e.target));
+      ring.classList.toggle('is-hover', !!isInteractive(e.target));
+    };
+
+    // Hide when the pointer leaves the window; show when it returns.
+    const hide = () => {
+      dot.classList.add('is-hidden');
+      ring.classList.add('is-hidden');
+    };
+    const show = () => {
+      dot.classList.remove('is-hidden');
+      ring.classList.remove('is-hidden');
     };
 
     const loop = () => {
       ringPos.x += (pos.x - ringPos.x) * 0.18;
       ringPos.y += (pos.y - ringPos.y) * 0.18;
-      if (ring) {
-        ring.style.left = `${ringPos.x}px`;
-        ring.style.top = `${ringPos.y}px`;
-      }
+      ring.style.left = `${ringPos.x}px`;
+      ring.style.top = `${ringPos.y}px`;
       rafId = requestAnimationFrame(loop);
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
     window.addEventListener('mouseover', onOver, { passive: true });
+    // `mouseleave`/`mouseenter` on document fire as the pointer crosses the
+    // window boundary; blur/focus cover tab and window switches.
+    document.addEventListener('mouseleave', hide);
+    document.addEventListener('mouseenter', show);
+    window.addEventListener('blur', hide);
+    window.addEventListener('focus', show);
     loop();
 
     return () => {
       document.body.classList.remove('has-cursor-trail');
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseover', onOver);
+      document.removeEventListener('mouseleave', hide);
+      document.removeEventListener('mouseenter', show);
+      window.removeEventListener('blur', hide);
+      window.removeEventListener('focus', show);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [enabled]);
+
+  // Nothing is rendered on touch / coarse-pointer / reduced-motion devices,
+  // so the dot and ring can never appear stuck in a corner.
+  if (!enabled) return null;
 
   return (
     <>
@@ -899,10 +915,9 @@ export default function CursorTrail() {
     </>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/Footer.jsx"
-cat > "$ROOT/src/components/Footer.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/Footer.jsx" << 'CORTINIX_EOF'
 import { Link } from 'react-router-dom';
 import { Linkedin, Twitter, Github, Dribbble } from 'lucide-react';
 import services from '../data/services';
@@ -918,7 +933,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link to="/" className="logo">
-              Nexus<span className="text-gradient">Works</span>
+              Corti<span className="text-gradient">nix</span>
             </Link>
             <p>
               Where human intelligence meets AI precision. We build, scale and automate your entire
@@ -947,12 +962,12 @@ export default function Footer() {
             <h4>Get Started</h4>
             <Link to="/contact">Free Consultation</Link>
             <Link to="/services">Explore Services</Link>
-            <a href="mailto:hello@nexusworks.com">hello@nexusworks.com</a>
+            <a href="mailto:hello@cortinix.com">hello@cortinix.com</a>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© {year} NexusWorks. Faster delivery, smarter outcomes.</span>
+          <span>© {year} Cortinix. Faster delivery, smarter outcomes.</span>
           <div className="footer-socials">
             <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noreferrer">
               <Linkedin size={18} />
@@ -972,10 +987,9 @@ export default function Footer() {
     </footer>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/GlowButton.jsx"
-cat > "$ROOT/src/components/GlowButton.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/GlowButton.jsx" << 'CORTINIX_EOF'
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
@@ -1057,10 +1071,9 @@ export default function GlowButton({
     </button>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/Icon.jsx"
-cat > "$ROOT/src/components/Icon.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/Icon.jsx" << 'CORTINIX_EOF'
 import * as Lucide from 'lucide-react';
 
 /**
@@ -1074,13 +1087,12 @@ export default function Icon({ name, size = 22, strokeWidth = 1.8, ...rest }) {
   const Cmp = Lucide[name] || Lucide.Circle;
   return <Cmp size={size} strokeWidth={strokeWidth} aria-hidden="true" {...rest} />;
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/Navbar.jsx"
-cat > "$ROOT/src/components/Navbar.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/Navbar.jsx" << 'CORTINIX_EOF'
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Moon, Sun } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import GlowButton from './GlowButton';
 
 const LINKS = [
@@ -1091,25 +1103,10 @@ const LINKS = [
   { to: '/contact', label: 'Contact' },
 ];
 
-/** Read the initial theme: saved preference, else system, else dark. */
-function getInitialTheme() {
-  if (typeof window === 'undefined') return 'dark';
-  const saved = window.localStorage.getItem('nx-theme');
-  if (saved === 'light' || saved === 'dark') return saved;
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-}
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState(getInitialTheme);
   const location = useLocation();
-
-  // Apply + persist theme.
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    window.localStorage.setItem('nx-theme', theme);
-  }, [theme]);
 
   // Add a solid background once the user scrolls.
   useEffect(() => {
@@ -1132,17 +1129,15 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
-
   return (
     <header className={`navbar ${scrolled ? 'is-scrolled' : ''}`}>
       <nav className="navbar-inner container" aria-label="Primary">
-        <Link to="/" className="navbar-logo" aria-label="NexusWorks home">
+        <Link to="/" className="navbar-logo" aria-label="Cortinix home">
           <span className="logo-mark" aria-hidden="true">
-            N
+            C
           </span>
           <span className="logo-text">
-            Nexus<span className="text-gradient">Works</span>
+            Corti<span className="text-gradient">nix</span>
           </span>
         </Link>
 
@@ -1161,14 +1156,6 @@ export default function Navbar() {
         </ul>
 
         <div className="navbar-actions">
-          <button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-
           <div className="navbar-cta-desktop">
             <GlowButton to="/contact">Get Free Consultation</GlowButton>
           </div>
@@ -1206,10 +1193,9 @@ export default function Navbar() {
     </header>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/ParticleField.jsx"
-cat > "$ROOT/src/components/ParticleField.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/ParticleField.jsx" << 'CORTINIX_EOF'
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -1386,10 +1372,9 @@ export default function ParticleField({ nodeCount = 50 }) {
 
   return <div ref={mountRef} className="particle-field" aria-hidden="true" />;
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/ScrollProgress.jsx"
-cat > "$ROOT/src/components/ScrollProgress.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/ScrollProgress.jsx" << 'CORTINIX_EOF'
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 /**
@@ -1407,10 +1392,9 @@ export default function ScrollProgress() {
 
   return <motion.div className="scroll-progress" style={{ scaleX }} aria-hidden="true" />;
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/ScrollReveal.jsx"
-cat > "$ROOT/src/components/ScrollReveal.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/ScrollReveal.jsx" << 'CORTINIX_EOF'
 import useScrollAnimation from '../utils/useScrollAnimation';
 
 /**
@@ -1441,10 +1425,9 @@ export default function ScrollReveal({
     </Tag>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/components/ServiceCard.jsx"
-cat > "$ROOT/src/components/ServiceCard.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/components/ServiceCard.jsx" << 'CORTINIX_EOF'
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
@@ -1513,13 +1496,12 @@ export default function ServiceCard({ service, featured = false }) {
     </Link>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/data/services.js"
-cat > "$ROOT/src/data/services.js" << 'NEXUS_EOF'
+cat > "$ROOT/src/data/services.js" << 'CORTINIX_EOF'
 /**
  * services.js
- * Single source of truth for all 15 NexusWorks services.
+ * Single source of truth for all 15 Cortinix services.
  * Consumed by the Services index (cards) and the dynamic
  * ServiceDetail page. `icon`/deliverable `icon` values are
  * Lucide React component names resolved at render time.
@@ -2187,10 +2169,9 @@ export const getServicesByCategory = (cat) =>
   cat === 'All' ? services : services.filter((s) => s.category === cat);
 
 export default services;
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/main.jsx"
-cat > "$ROOT/src/main.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/main.jsx" << 'CORTINIX_EOF'
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -2211,10 +2192,9 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </StrictMode>
 );
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/pages/About.jsx"
-cat > "$ROOT/src/pages/About.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/pages/About.jsx" << 'CORTINIX_EOF'
 import { Crown, Cpu, Palette } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal.jsx';
 import GlowButton from '../components/GlowButton.jsx';
@@ -2238,7 +2218,7 @@ const TEAM = [
 ];
 
 const TIMELINE = [
-  { year: '2021', title: 'Founded on one frustration', desc: 'Three operators were tired of watching founders stitch together six vendors. NexusWorks started as a single pod.' },
+  { year: '2021', title: 'Founded on one frustration', desc: 'Three operators were tired of watching founders stitch together six vendors. Cortinix started as a single pod.' },
   { year: '2022', title: 'AI woven into delivery', desc: 'We rebuilt every workflow around AI-assisted research, drafting and QA — cutting turnaround without cutting quality.' },
   { year: '2023', title: '15 services under one roof', desc: 'From marketing to ERP to data, we became the single accountable team clients had been missing.' },
   { year: '2024', title: '40+ active clients', desc: 'Retention crossed 98% as engagements grew from one project into long-term partnerships.' },
@@ -2264,7 +2244,7 @@ export default function About() {
   return (
     <>
       <header className="page-hero container">
-        <p className="eyebrow">About NexusWorks</p>
+        <p className="eyebrow">About Cortinix</p>
         <h1>
           Human intelligence, <span className="text-gradient">AI precision</span> — one team for it
           all.
@@ -2284,7 +2264,7 @@ export default function About() {
           </ScrollReveal>
           <ScrollReveal className="about-story" delay={1}>
             <p>
-              NexusWorks began when three operators kept watching the same thing kill good companies:
+              Cortinix began when three operators kept watching the same thing kill good companies:
               not a lack of ideas, but a tangle of disconnected freelancers, tools and agencies that
               nobody owned end to end.
             </p>
@@ -2386,10 +2366,9 @@ export default function About() {
     </>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/pages/Blog.jsx"
-cat > "$ROOT/src/pages/Blog.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/pages/Blog.jsx" << 'CORTINIX_EOF'
 import GlowButton from '../components/GlowButton.jsx';
 
 export default function Blog() {
@@ -2410,10 +2389,9 @@ export default function Blog() {
     </section>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/pages/Contact.jsx"
-cat > "$ROOT/src/pages/Contact.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/pages/Contact.jsx" << 'CORTINIX_EOF'
 import { useState } from 'react';
 import { Mail, Clock, Sparkles, Check } from 'lucide-react';
 import { services } from '../data/services.js';
@@ -2434,7 +2412,7 @@ const INFO = [
   {
     icon: Mail,
     title: 'Email us',
-    body: 'hello@nexusworks.com — we reply within one business day.',
+    body: 'hello@cortinix.com — we reply within one business day.',
   },
   {
     icon: Clock,
@@ -2697,10 +2675,9 @@ export default function Contact() {
     </>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/pages/Home.jsx"
-cat > "$ROOT/src/pages/Home.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/pages/Home.jsx" << 'CORTINIX_EOF'
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -2795,7 +2772,7 @@ const PROCESS = [
 const TESTIMONIALS = [
   {
     quote:
-      'NexusWorks replaced four vendors with one team. We shipped our rebrand, new site and paid engine in six weeks — and our CAC dropped a third.',
+      'Cortinix replaced four vendors with one team. We shipped our rebrand, new site and paid engine in six weeks — and our CAC dropped a third.',
     name: 'Priya Nair',
     role: 'Founder, seed-stage SaaS',
   },
@@ -2913,7 +2890,7 @@ function ProcessSection() {
           <p className="eyebrow">How we work</p>
           <h2>Five steps from chaos to compounding growth.</h2>
           <p className="text-muted">
-            One accountable team, one system — scroll through how a NexusWorks engagement unfolds.
+            One accountable team, one system — scroll through how a Cortinix engagement unfolds.
           </p>
         </div>
         {PROCESS.map((p, i) => (
@@ -2961,10 +2938,6 @@ export default function Home() {
               Get Free Consultation
             </GlowButton>
           </div>
-        </div>
-        <div className="hero-scroll-hint" aria-hidden="true">
-          <span className="mouse" />
-          <span className="mono">scroll</span>
         </div>
       </section>
 
@@ -3107,10 +3080,9 @@ export default function Home() {
     </>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/pages/Services/ServiceDetail.jsx"
-cat > "$ROOT/src/pages/Services/ServiceDetail.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/pages/Services/ServiceDetail.jsx" << 'CORTINIX_EOF'
 import { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, Cpu, UserCog, ChevronDown, Building2 } from 'lucide-react';
@@ -3301,10 +3273,9 @@ export default function ServiceDetail() {
     </>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/pages/Services/index.jsx"
-cat > "$ROOT/src/pages/Services/index.jsx" << 'NEXUS_EOF'
+cat > "$ROOT/src/pages/Services/index.jsx" << 'CORTINIX_EOF'
 import { useMemo, useState } from 'react';
 import ServiceCard from '../../components/ServiceCard.jsx';
 import GlowButton from '../../components/GlowButton.jsx';
@@ -3366,12 +3337,11 @@ export default function ServicesIndex() {
     </>
   );
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/styles/animations.css"
-cat > "$ROOT/src/styles/animations.css" << 'NEXUS_EOF'
+cat > "$ROOT/src/styles/animations.css" << 'CORTINIX_EOF'
 /* ============================================================
-   NexusWorks — Animations
+   Cortinix — Animations
    Keyframes + micro-interaction styles. All motion respects
    prefers-reduced-motion at the bottom of this file.
    ============================================================ */
@@ -3606,6 +3576,13 @@ cat > "$ROOT/src/styles/animations.css" << 'NEXUS_EOF'
   z-index: 9998;
   border-radius: 50%;
   mix-blend-mode: screen;
+  opacity: 1;
+  transition: opacity 0.2s var(--ease-out);
+}
+/* Hidden when the pointer leaves the window or the tab loses focus. */
+.cursor-dot.is-hidden,
+.cursor-ring.is-hidden {
+  opacity: 0;
 }
 .cursor-dot {
   width: 7px;
@@ -3619,7 +3596,8 @@ cat > "$ROOT/src/styles/animations.css" << 'NEXUS_EOF'
   border: 1.5px solid var(--accent-1);
   transform: translate(-50%, -50%);
   transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out),
-    border-color 0.25s var(--ease-out), background 0.25s var(--ease-out);
+    border-color 0.25s var(--ease-out), background 0.25s var(--ease-out),
+    opacity 0.2s var(--ease-out);
 }
 .cursor-ring.is-hover {
   width: 58px;
@@ -3635,6 +3613,15 @@ body.has-cursor-trail {
 body.has-cursor-trail a,
 body.has-cursor-trail button {
   cursor: none;
+}
+
+/* Safety net: never show the custom cursor on touch / coarse-pointer
+   devices, even if scripting leaves the nodes mounted. */
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
 }
 
 /* ── Pulsing dot for live indicators ───────────────────── */
@@ -3724,12 +3711,11 @@ body.has-cursor-trail button {
     cursor: auto;
   }
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/styles/components.css"
-cat > "$ROOT/src/styles/components.css" << 'NEXUS_EOF'
+cat > "$ROOT/src/styles/components.css" << 'CORTINIX_EOF'
 /* ============================================================
-   NexusWorks — Component styles
+   Cortinix — Component styles
    Navbar, hero particle field, service cards.
    ============================================================ */
 
@@ -3813,21 +3799,6 @@ cat > "$ROOT/src/styles/components.css" << 'NEXUS_EOF'
   display: flex;
   align-items: center;
   gap: 0.8rem;
-}
-.theme-toggle {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--border-soft);
-  color: var(--text-secondary);
-  transition: all var(--dur-fast) var(--ease-out);
-}
-.theme-toggle:hover {
-  color: var(--accent-2);
-  border-color: var(--border);
-  transform: rotate(18deg);
 }
 .navbar-burger {
   display: none;
@@ -3965,12 +3936,11 @@ cat > "$ROOT/src/styles/components.css" << 'NEXUS_EOF'
 .service-card:hover .service-card-go {
   gap: 0.7rem;
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/styles/globals.css"
-cat > "$ROOT/src/styles/globals.css" << 'NEXUS_EOF'
+cat > "$ROOT/src/styles/globals.css" << 'CORTINIX_EOF'
 /* ============================================================
-   NexusWorks — Global styles
+   Cortinix — Global styles
    Reset, base type, layout primitives, shared UI utilities.
    ============================================================ */
 
@@ -4429,12 +4399,11 @@ select {
     flex-direction: column;
   }
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/styles/pages.css"
-cat > "$ROOT/src/styles/pages.css" << 'NEXUS_EOF'
+cat > "$ROOT/src/styles/pages.css" << 'CORTINIX_EOF'
 /* ============================================================
-   NexusWorks — Page styles
+   Cortinix — Page styles
    Hero, Home sections, About, Services, ServiceDetail, Contact.
    ============================================================ */
 
@@ -4483,41 +4452,6 @@ cat > "$ROOT/src/styles/pages.css" << 'NEXUS_EOF'
   gap: 1rem;
   flex-wrap: wrap;
 }
-.hero-scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.15em;
-}
-.hero-scroll-hint .mouse {
-  width: 22px;
-  height: 36px;
-  border: 1.5px solid var(--text-muted);
-  border-radius: 12px;
-  position: relative;
-}
-.hero-scroll-hint .mouse::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  width: 3px;
-  height: 7px;
-  border-radius: 2px;
-  background: var(--accent-2);
-  transform: translateX(-50%);
-  animation: float 1.6s ease-in-out infinite;
-}
-
 /* ── Section heading block ─────────────────────────────── */
 .section-head {
   max-width: 60rem;
@@ -5395,13 +5329,12 @@ cat > "$ROOT/src/styles/pages.css" << 'NEXUS_EOF'
   background-clip: text;
   color: transparent;
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/styles/variables.css"
-cat > "$ROOT/src/styles/variables.css" << 'NEXUS_EOF'
+cat > "$ROOT/src/styles/variables.css" << 'CORTINIX_EOF'
 /* ============================================================
-   NexusWorks — Design Tokens
-   Dark-first theme with a light-mode override via [data-theme].
+   Cortinix — Design Tokens
+   Dark-only theme.
    ============================================================ */
 
 :root,
@@ -5473,39 +5406,9 @@ cat > "$ROOT/src/styles/variables.css" << 'NEXUS_EOF'
   --nav-h: 76px;
   color-scheme: dark;
 }
-
-[data-theme='light'] {
-  --bg-primary: #f5f6fb;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #eef0f9;
-  --bg-glass: rgba(8, 12, 20, 0.03);
-  --bg-glass-strong: rgba(8, 12, 20, 0.06);
-
-  --accent-1: #5a4ff0;
-  --accent-1-soft: rgba(90, 79, 240, 0.12);
-  --accent-2: #009e80;
-  --accent-2-soft: rgba(0, 158, 128, 0.12);
-  --accent-3: #e8504f;
-  --accent-3-soft: rgba(232, 80, 79, 0.12);
-
-  --text-primary: #0c1222;
-  --text-secondary: #2b3450;
-  --text-muted: #5b657d;
-
-  --border: rgba(90, 79, 240, 0.22);
-  --border-soft: rgba(8, 12, 20, 0.1);
-
-  --glow-violet: 0 0 36px rgba(90, 79, 240, 0.25);
-  --glow-teal: 0 0 36px rgba(0, 158, 128, 0.22);
-  --shadow-card: 0 22px 50px -30px rgba(12, 18, 34, 0.4);
-  --gradient-text: linear-gradient(120deg, #0c1222 0%, #5a4ff0 50%, #009e80 100%);
-
-  color-scheme: light;
-}
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/utils/api.js"
-cat > "$ROOT/src/utils/api.js" << 'NEXUS_EOF'
+cat > "$ROOT/src/utils/api.js" << 'CORTINIX_EOF'
 import axios from 'axios';
 
 /**
@@ -5542,10 +5445,9 @@ export async function submitQuery(payload) {
 }
 
 export default api;
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • src/utils/useScrollAnimation.js"
-cat > "$ROOT/src/utils/useScrollAnimation.js" << 'NEXUS_EOF'
+cat > "$ROOT/src/utils/useScrollAnimation.js" << 'CORTINIX_EOF'
 import { useEffect, useRef, useState } from 'react';
 
 /**
@@ -5599,10 +5501,9 @@ export default function useScrollAnimation({
 
   return [ref, isVisible];
 }
-NEXUS_EOF
-
+CORTINIX_EOF
 echo "  • vite.config.js"
-cat > "$ROOT/vite.config.js" << 'NEXUS_EOF'
+cat > "$ROOT/vite.config.js" << 'CORTINIX_EOF'
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -5636,15 +5537,7 @@ export default defineConfig({
     },
   },
 });
-NEXUS_EOF
-
-# ── Done ────────────────────────────────────────────────
+CORTINIX_EOF
 echo ""
 echo "✓ Wrote 38 files into ./$ROOT"
-echo ""
-echo "Next steps:"
-echo "  cd $ROOT"
-echo "  npm install"
-echo "  cp .env.example .env   # then fill in MONGODB_URI"
-echo "  npm run server         # terminal 1 — Express API"
-echo "  npm run dev            # terminal 2 — Vite dev server"
+echo "Next: cd $ROOT && npm install && cp .env.example .env"

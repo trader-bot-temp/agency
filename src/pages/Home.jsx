@@ -92,7 +92,7 @@ const PROCESS = [
 const TESTIMONIALS = [
   {
     quote:
-      'NexusWorks replaced four vendors with one team. We shipped our rebrand, new site and paid engine in six weeks — and our CAC dropped a third.',
+      'Cortinix replaced four vendors with one team. We shipped our rebrand, new site and paid engine in six weeks — and our CAC dropped a third.',
     name: 'Priya Nair',
     role: 'Founder, seed-stage SaaS',
   },
@@ -210,7 +210,7 @@ function ProcessSection() {
           <p className="eyebrow">How we work</p>
           <h2>Five steps from chaos to compounding growth.</h2>
           <p className="text-muted">
-            One accountable team, one system — scroll through how a NexusWorks engagement unfolds.
+            One accountable team, one system — scroll through how a Cortinix engagement unfolds.
           </p>
         </div>
         {PROCESS.map((p, i) => (
@@ -258,10 +258,6 @@ export default function Home() {
               Get Free Consultation
             </GlowButton>
           </div>
-        </div>
-        <div className="hero-scroll-hint" aria-hidden="true">
-          <span className="mouse" />
-          <span className="mono">scroll</span>
         </div>
       </section>
 

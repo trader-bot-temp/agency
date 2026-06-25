@@ -55,7 +55,7 @@ router.post('/queries', validateQuery, async (req, res, next) => {
 const adminAuth = basicAuth({
   users: { [process.env.ADMIN_USER || 'admin']: process.env.ADMIN_PASS || 'changeme' },
   challenge: true,
-  realm: 'NexusWorks Admin',
+  realm: 'Cortinix Admin',
 });
 
 /**

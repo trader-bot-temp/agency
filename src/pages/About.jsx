@@ -21,7 +21,7 @@ const TEAM = [
 ];
 
 const TIMELINE = [
-  { year: '2021', title: 'Founded on one frustration', desc: 'Three operators were tired of watching founders stitch together six vendors. NexusWorks started as a single pod.' },
+  { year: '2021', title: 'Founded on one frustration', desc: 'Three operators were tired of watching founders stitch together six vendors. Cortinix started as a single pod.' },
   { year: '2022', title: 'AI woven into delivery', desc: 'We rebuilt every workflow around AI-assisted research, drafting and QA — cutting turnaround without cutting quality.' },
   { year: '2023', title: '15 services under one roof', desc: 'From marketing to ERP to data, we became the single accountable team clients had been missing.' },
   { year: '2024', title: '40+ active clients', desc: 'Retention crossed 98% as engagements grew from one project into long-term partnerships.' },
@@ -47,7 +47,7 @@ export default function About() {
   return (
     <>
       <header className="page-hero container">
-        <p className="eyebrow">About NexusWorks</p>
+        <p className="eyebrow">About Cortinix</p>
         <h1>
           Human intelligence, <span className="text-gradient">AI precision</span> — one team for it
           all.
@@ -67,7 +67,7 @@ export default function About() {
           </ScrollReveal>
           <ScrollReveal className="about-story" delay={1}>
             <p>
-              NexusWorks began when three operators kept watching the same thing kill good companies:
+              Cortinix began when three operators kept watching the same thing kill good companies:
               not a lack of ideas, but a tangle of disconnected freelancers, tools and agencies that
               nobody owned end to end.
             </p>

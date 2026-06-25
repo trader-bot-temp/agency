@@ -1,5 +1,5 @@
 /* ============================================================
-   NexusWorks — Component styles
+   Cortinix — Component styles
    Navbar, hero particle field, service cards.
    ============================================================ */
 
@@ -83,21 +83,6 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-}
-.theme-toggle {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--border-soft);
-  color: var(--text-secondary);
-  transition: all var(--dur-fast) var(--ease-out);
-}
-.theme-toggle:hover {
-  color: var(--accent-2);
-  border-color: var(--border);
-  transform: rotate(18deg);
 }
 .navbar-burger {
   display: none;

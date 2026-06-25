@@ -18,7 +18,7 @@ const INFO = [
   {
     icon: Mail,
     title: 'Email us',
-    body: 'hello@nexusworks.com — we reply within one business day.',
+    body: 'hello@cortinix.com — we reply within one business day.',
   },
   {
     icon: Clock,

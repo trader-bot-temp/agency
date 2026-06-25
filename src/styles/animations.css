@@ -1,5 +1,5 @@
 /* ============================================================
-   NexusWorks — Animations
+   Cortinix — Animations
    Keyframes + micro-interaction styles. All motion respects
    prefers-reduced-motion at the bottom of this file.
    ============================================================ */
@@ -234,6 +234,13 @@
   z-index: 9998;
   border-radius: 50%;
   mix-blend-mode: screen;
+  opacity: 1;
+  transition: opacity 0.2s var(--ease-out);
+}
+/* Hidden when the pointer leaves the window or the tab loses focus. */
+.cursor-dot.is-hidden,
+.cursor-ring.is-hidden {
+  opacity: 0;
 }
 .cursor-dot {
   width: 7px;
@@ -247,7 +254,8 @@
   border: 1.5px solid var(--accent-1);
   transform: translate(-50%, -50%);
   transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out),
-    border-color 0.25s var(--ease-out), background 0.25s var(--ease-out);
+    border-color 0.25s var(--ease-out), background 0.25s var(--ease-out),
+    opacity 0.2s var(--ease-out);
 }
 .cursor-ring.is-hover {
   width: 58px;
@@ -263,6 +271,15 @@ body.has-cursor-trail {
 body.has-cursor-trail a,
 body.has-cursor-trail button {
   cursor: none;
+}
+
+/* Safety net: never show the custom cursor on touch / coarse-pointer
+   devices, even if scripting leaves the nodes mounted. */
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
 }
 
 /* ── Pulsing dot for live indicators ───────────────────── */

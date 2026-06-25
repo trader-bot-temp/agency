@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Moon, Sun } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import GlowButton from './GlowButton';
 
 const LINKS = [
@@ -11,25 +11,10 @@ const LINKS = [
   { to: '/contact', label: 'Contact' },
 ];
 
-/** Read the initial theme: saved preference, else system, else dark. */
-function getInitialTheme() {
-  if (typeof window === 'undefined') return 'dark';
-  const saved = window.localStorage.getItem('nx-theme');
-  if (saved === 'light' || saved === 'dark') return saved;
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-}
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState(getInitialTheme);
   const location = useLocation();
-
-  // Apply + persist theme.
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    window.localStorage.setItem('nx-theme', theme);
-  }, [theme]);
 
   // Add a solid background once the user scrolls.
   useEffect(() => {
@@ -52,17 +37,15 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
-
   return (
     <header className={`navbar ${scrolled ? 'is-scrolled' : ''}`}>
       <nav className="navbar-inner container" aria-label="Primary">
-        <Link to="/" className="navbar-logo" aria-label="NexusWorks home">
+        <Link to="/" className="navbar-logo" aria-label="Cortinix home">
           <span className="logo-mark" aria-hidden="true">
-            N
+            C
           </span>
           <span className="logo-text">
-            Nexus<span className="text-gradient">Works</span>
+            Corti<span className="text-gradient">nix</span>
           </span>
         </Link>
 
@@ -81,14 +64,6 @@ export default function Navbar() {
         </ul>
 
         <div className="navbar-actions">
-          <button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-
           <div className="navbar-cta-desktop">
             <GlowButton to="/contact">Get Free Consultation</GlowButton>
           </div>

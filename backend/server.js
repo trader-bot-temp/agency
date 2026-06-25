@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/nexusworks';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/cortinix';
 
 // ── Core middleware ─────────────────────────────────────
 app.disable('x-powered-by');
@@ -49,7 +49,7 @@ async function start() {
     console.log('✓ MongoDB connected');
     app.listen(PORT, () => {
       // eslint-disable-next-line no-console
-      console.log(`✓ NexusWorks API running on http://localhost:${PORT}`);
+      console.log(`✓ Cortinix API running on http://localhost:${PORT}`);
     });
   } catch (err) {
     // eslint-disable-next-line no-console

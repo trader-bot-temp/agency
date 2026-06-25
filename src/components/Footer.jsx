@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link to="/" className="logo">
-              Nexus<span className="text-gradient">Works</span>
+              Corti<span className="text-gradient">nix</span>
             </Link>
             <p>
               Where human intelligence meets AI precision. We build, scale and automate your entire
@@ -42,12 +42,12 @@ export default function Footer() {
             <h4>Get Started</h4>
             <Link to="/contact">Free Consultation</Link>
             <Link to="/services">Explore Services</Link>
-            <a href="mailto:hello@nexusworks.com">hello@nexusworks.com</a>
+            <a href="mailto:hello@cortinix.com">hello@cortinix.com</a>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© {year} NexusWorks. Faster delivery, smarter outcomes.</span>
+          <span>© {year} Cortinix. Faster delivery, smarter outcomes.</span>
           <div className="footer-socials">
             <a href="https://linkedin.com" aria-label="LinkedIn" target="_blank" rel="noreferrer">
               <Linkedin size={18} />

@@ -1,6 +1,6 @@
 /**
  * services.js
- * Single source of truth for all 15 NexusWorks services.
+ * Single source of truth for all 15 Cortinix services.
  * Consumed by the Services index (cards) and the dynamic
  * ServiceDetail page. `icon`/deliverable `icon` values are
  * Lucide React component names resolved at render time.

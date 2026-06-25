@@ -1,5 +1,5 @@
 /* ============================================================
-   NexusWorks — Page styles
+   Cortinix — Page styles
    Hero, Home sections, About, Services, ServiceDetail, Contact.
    ============================================================ */
 
@@ -48,41 +48,6 @@
   gap: 1rem;
   flex-wrap: wrap;
 }
-.hero-scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.15em;
-}
-.hero-scroll-hint .mouse {
-  width: 22px;
-  height: 36px;
-  border: 1.5px solid var(--text-muted);
-  border-radius: 12px;
-  position: relative;
-}
-.hero-scroll-hint .mouse::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  width: 3px;
-  height: 7px;
-  border-radius: 2px;
-  background: var(--accent-2);
-  transform: translateX(-50%);
-  animation: float 1.6s ease-in-out infinite;
-}
-
 /* ── Section heading block ─────────────────────────────── */
 .section-head {
   max-width: 60rem;

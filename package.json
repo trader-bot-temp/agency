@@ -1,9 +1,9 @@
 {
-  "name": "nexusworks",
+  "name": "cortinix",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "NexusWorks — Where Human Intelligence Meets AI Precision. Production agency website.",
+  "description": "Cortinix — Where Human Intelligence Meets AI Precision. Production agency website.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

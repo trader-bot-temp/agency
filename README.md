@@ -1,4 +1,4 @@
-# NexusWorks
+# Cortinix
 
 **Where Human Intelligence Meets AI Precision — Faster Delivery, Smarter Outcomes.**
 
@@ -23,7 +23,7 @@ A production-ready, fully animated agency website for an all-in-one services age
 ## Project structure
 
 ```
-nexusworks/
+cortinix/
 ├── backend/
 │   ├── middleware/      cors.js, errorHandler.js
 │   ├── models/          Query.js          (Mongoose schema)
@@ -153,5 +153,5 @@ Validation runs on both the client (Contact form) and the server (express-valida
 ## Packaging
 
 ```bash
-tar -czf nexusworks.tar.gz nexusworks/
+tar -czf cortinix.tar.gz cortinix/
 ```

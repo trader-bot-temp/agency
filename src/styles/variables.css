@@ -1,6 +1,6 @@
 /* ============================================================
-   NexusWorks — Design Tokens
-   Dark-first theme with a light-mode override via [data-theme].
+   Cortinix — Design Tokens
+   Dark-only theme.
    ============================================================ */
 
 :root,
@@ -71,33 +71,4 @@
   /* Misc */
   --nav-h: 76px;
   color-scheme: dark;
-}
-
-[data-theme='light'] {
-  --bg-primary: #f5f6fb;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #eef0f9;
-  --bg-glass: rgba(8, 12, 20, 0.03);
-  --bg-glass-strong: rgba(8, 12, 20, 0.06);
-
-  --accent-1: #5a4ff0;
-  --accent-1-soft: rgba(90, 79, 240, 0.12);
-  --accent-2: #009e80;
-  --accent-2-soft: rgba(0, 158, 128, 0.12);
-  --accent-3: #e8504f;
-  --accent-3-soft: rgba(232, 80, 79, 0.12);
-
-  --text-primary: #0c1222;
-  --text-secondary: #2b3450;
-  --text-muted: #5b657d;
-
-  --border: rgba(90, 79, 240, 0.22);
-  --border-soft: rgba(8, 12, 20, 0.1);
-
-  --glow-violet: 0 0 36px rgba(90, 79, 240, 0.25);
-  --glow-teal: 0 0 36px rgba(0, 158, 128, 0.22);
-  --shadow-card: 0 22px 50px -30px rgba(12, 18, 34, 0.4);
-  --gradient-text: linear-gradient(120deg, #0c1222 0%, #5a4ff0 50%, #009e80 100%);
-
-  color-scheme: light;
 }
